@@ -1,0 +1,81 @@
+.clerk-dashboard-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #cbd5e1, #e2e8f0);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.dashboard-box {
+  background: linear-gradient(to bottom, #1e40af, #2563eb);
+  border-radius: 1.5rem;
+  padding: 2rem 3rem;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  color: white;
+  text-align: center;
+}
+
+.court-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+.court-subtitle {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #dbeafe;
+}
+
+.ecms-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.dashboard-heading {
+  font-size: 1.2rem;
+  background: white;
+  color: #1e40af;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.dash-btn {
+  background: #374151;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.dash-btn:hover {
+  background: #111827;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+.dashboard-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 15px;
+  color: #ffffff;
+  padding: 10px;
+}

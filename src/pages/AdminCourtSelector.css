@@ -1,0 +1,42 @@
+.court-dashboard {
+  background: linear-gradient(to bottom, #267dd8, #004080);
+  min-height: 100vh;
+  padding: 30px;
+  border-radius: 30px;
+}
+
+.title-box {
+  background-color: #c4d8f7;
+  padding: 10px 20px;
+  border: 3px solid #223f74;
+  margin: 30px auto;
+  width: 70%;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 8px;
+  color: #223f74;
+}
+
+.court-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.court-btn {
+  background-color: #3d3d3d;
+  color: white;
+  border: none;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 2px 2px 5px #000;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.court-btn:hover {
+  background-color: #505050;
+  cursor: pointer;
+}

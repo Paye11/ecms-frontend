@@ -1,0 +1,123 @@
+/* Container styling */
+.returns-container {
+  padding: 2rem;
+  background: linear-gradient(to right, #e0f2fe, #dbeafe);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title */
+.returns-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Form Box */
+.returns-form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Checkbox and radio */
+.checkbox-group,
+.form-group label input[type="checkbox"],
+.form-group label input[type="radio"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox-group label,
+.form-group label input[type="radio"] {
+  font-weight: normal;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Buttons */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-buttons button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"].submit-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #1e40af;
+}
+
+button[type="reset"] {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+button[type="reset"]:hover {
+  background-color: #d1d5db;
+}
+
+button[type="button"] {
+  background-color: #10b981;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #059669;
+}
