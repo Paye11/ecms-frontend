@@ -54,6 +54,17 @@ import ClerkCourtFeeMyReports from './pages/ClerkCourtFeeMyReports.jsx'
 import AdminCourtFeeReports from './pages/AdminCourtFeeReports.jsx'
 import ChiefCourtFeeReports from './pages/ChiefCourtFeeReports.jsx'
 
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
+axios.defaults.baseURL = apiBaseUrl;
+
+axios.interceptors.request.use((config) => {
+  if (typeof config.url === "string" && config.url.includes("localhost:5000")) {
+    config.url = config.url.replace("http://localhost:5000", apiBaseUrl);
+  }
+  return config;
+});
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
