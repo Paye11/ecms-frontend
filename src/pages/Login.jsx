@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
-import './Login.css';
+import './login.css';
 import logo1 from '../assets/logo1.png';
 import logo2 from '../assets/logo2.png';
 import watermark from '../assets/watermark.png';
