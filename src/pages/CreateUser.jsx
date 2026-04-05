@@ -8,6 +8,8 @@ function CreateUser() {
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('Circuit Clerk');
   const [court, setCourt] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [availableCourts, setAvailableCourts] = useState([]);
   const navigate = useNavigate();
@@ -36,9 +38,15 @@ function CreateUser() {
     setIsCreating(true);
 
     try {
+      if (password !== confirmPassword) {
+        toast.error("❌ Passwords do not match");
+        return;
+      }
+
       const res = await axios.post('http://localhost:5000/api/auth/create', {
         username,
         role,
+        password,
         circuitCourt: role === 'Circuit Clerk' ? court : null
       }, {
         headers: {
@@ -46,7 +54,7 @@ function CreateUser() {
         }
       });
 
-      toast.success(`✅ User created!\nUsername: ${res.data.username}\nPassword: ${res.data.password}`);
+      toast.success(`✅ User created! Username: ${res.data.username}`);
 
       setTimeout(() => {
         navigate("/admin"); // redirect after success
@@ -88,6 +96,30 @@ function CreateUser() {
             <option value="Circuit Clerk">Circuit Clerk</option>
             <option value="Chief Justice">Chief Justice</option>
           </select>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter a password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Confirm Password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+            required
+          />
         </div>
 
         {role === "Circuit Clerk" && (

@@ -82,9 +82,11 @@ function AdminDashboard() {
 
   const handleUpdate = async () => {
     try {
+      const payload = { username: editUsername };
+      if (editPassword.trim()) payload.password = editPassword;
+
       await axios.put(`http://localhost:5000/api/auth/user/${editUser._id}`, {
-        username: editUsername,
-        password: editPassword
+        ...payload
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
