@@ -7,7 +7,9 @@ import "./AdminCourtSelector.css";
 export default function AdminCourtSelector() {
   const navigate = useNavigate();
   const [courts, setCourts] = useState([]);
-  const [newCourt, setNewCourt] = useState("");
+  const [newCourtName, setNewCourtName] = useState("");
+  const [newCourtLocation, setNewCourtLocation] = useState("");
+  const [newCourtPassword, setNewCourtPassword] = useState("");
 
   useEffect(() => {
     fetchCourts();
@@ -19,33 +21,38 @@ export default function AdminCourtSelector() {
       const res = await axios.get("http://localhost:5000/api/courts", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCourts(res.data.map((court) => court.name));
+      setCourts(res.data);
     } catch (err) {
       toast.error("❌ Failed to load courts");
     }
   };
 
-  const handleSelect = (courtName) => {
-    localStorage.setItem("selectedCourt", courtName);
+  const handleSelect = (court) => {
+    localStorage.setItem("selectedCourt", court.name);
     navigate("/admin/dashboard");
   };
 
   const handleAddCourt = async () => {
-    if (!newCourt.trim()) return;
+    const name = newCourtName.trim();
+    const location = newCourtLocation.trim();
+    const password = newCourtPassword;
+    if (!name || !location || !password) return;
 
     try {
       const token = localStorage.getItem("token");
       await axios.post(
         "http://localhost:5000/api/courts",
-        { name: newCourt.trim() },
+        { name, location, password },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setNewCourt("");
+      setNewCourtName("");
+      setNewCourtLocation("");
+      setNewCourtPassword("");
       fetchCourts();
 
-      const modal = bootstrap.Modal.getInstance(
+      const modal = window.bootstrap?.Modal.getInstance(
         document.getElementById("addCourtModal")
       );
       modal.hide();
@@ -54,22 +61,12 @@ export default function AdminCourtSelector() {
     }
   };
 
-  const handleDeleteCourt = async (index) => {
+  const handleDeleteCourt = async (courtId) => {
     if (!window.confirm("Are you sure you want to delete this court?")) return;
 
     try {
       const token = localStorage.getItem("token");
-      const courtToDelete = courts[index];
-
-      // Fetch all courts to get the MongoDB ID
-      const res = await axios.get("http://localhost:5000/api/courts", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const target = res.data.find((c) => c.name === courtToDelete);
-
-      if (!target) return toast.error("Court not found!");
-
-      await axios.delete(`http://localhost:5000/api/courts/${target._id}`, {
+      await axios.delete(`http://localhost:5000/api/courts/${courtId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -118,17 +115,17 @@ export default function AdminCourtSelector() {
       </div>
 
       <div className="court-buttons">
-        {courts.map((court, i) => (
+        {courts.map((court) => (
           <div
-            key={i}
+            key={court._id}
             className="d-flex justify-content-between align-items-center court-row"
           >
             <button className="court-btn" onClick={() => handleSelect(court)}>
-              {court}
+              {court.name}
             </button>
             <button
               className="btn btn-sm btn-danger ms-2"
-              onClick={() => handleDeleteCourt(i)}
+              onClick={() => handleDeleteCourt(court._id)}
             >
               🗑
             </button>
@@ -169,8 +166,22 @@ export default function AdminCourtSelector() {
                 type="text"
                 className="form-control"
                 placeholder="Enter new court name"
-                value={newCourt}
-                onChange={(e) => setNewCourt(e.target.value)}
+                value={newCourtName}
+                onChange={(e) => setNewCourtName(e.target.value)}
+              />
+              <input
+                type="text"
+                className="form-control mt-3"
+                placeholder="Enter court location"
+                value={newCourtLocation}
+                onChange={(e) => setNewCourtLocation(e.target.value)}
+              />
+              <input
+                type="password"
+                className="form-control mt-3"
+                placeholder="Set court password"
+                value={newCourtPassword}
+                onChange={(e) => setNewCourtPassword(e.target.value)}
               />
             </div>
             <div className="modal-footer">
