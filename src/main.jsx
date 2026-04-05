@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -81,8 +81,27 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+function NavigationControls() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  if (location.pathname === "/") return null;
+
+  return (
+    <div style={{ position: "fixed", top: 12, left: 12, zIndex: 2000, display: "flex", gap: 6 }}>
+      <button type="button" className="btn btn-sm btn-light border" onClick={() => navigate(-1)}>
+        ←
+      </button>
+      <button type="button" className="btn btn-sm btn-light border" onClick={() => navigate(1)}>
+        →
+      </button>
+    </div>
+  );
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
+    <NavigationControls />
     <Routes>
       <Route path="/" element={<Login />} />
       
