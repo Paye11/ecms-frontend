@@ -41,7 +41,11 @@ function Login() {
       }, 1500);
 
     } catch (err) {
-      toast.error(err.response?.data?.msg || "Invalid credentials");
+      if (!err.response) {
+        toast.error("Cannot reach server. Check VITE_API_BASE_URL in Vercel.");
+      } else {
+        toast.error(err.response?.data?.msg || "Invalid credentials");
+      }
       setIsLoading(false);
     }
   };

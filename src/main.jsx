@@ -54,7 +54,23 @@ import ClerkCourtFeeMyReports from './pages/ClerkCourtFeeMyReports.jsx'
 import AdminCourtFeeReports from './pages/AdminCourtFeeReports.jsx'
 import ChiefCourtFeeReports from './pages/ChiefCourtFeeReports.jsx'
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const normalizeApiBaseUrl = (rawValue) => {
+  const fallback = "http://localhost:5000";
+  if (typeof rawValue !== "string") return fallback;
+
+  const trimmed = rawValue.trim().replace(/^`|`$/g, "");
+  if (!trimmed) return fallback;
+
+  const withProtocol = trimmed.startsWith("http://") || trimmed.startsWith("https://")
+    ? trimmed
+    : trimmed.startsWith("//")
+      ? `https:${trimmed}`
+      : `https://${trimmed}`;
+
+  return withProtocol.replace(/\/+$/, "");
+};
+
+const apiBaseUrl = normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
 
 axios.defaults.baseURL = apiBaseUrl;
 
