@@ -42,7 +42,8 @@ function Login() {
 
     } catch (err) {
       if (!err.response) {
-        toast.error("Cannot reach server. Check VITE_API_BASE_URL in Vercel.");
+        const baseUrl = axios.defaults?.baseURL || "unknown";
+        toast.error(`Cannot reach server (${baseUrl}). Check VITE_API_BASE_URL in Vercel.`);
       } else {
         toast.error(err.response?.data?.msg || "Invalid credentials");
       }
