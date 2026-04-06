@@ -56,6 +56,9 @@ export default function AdminCourtSelector() {
       setNewCourtLocation("");
       setNewCourtPassword("");
       
+      // Force immediate data refresh
+      await fetchCourts();
+
       // Close modal safely
       const modalElement = document.getElementById("addCourtModal");
       if (modalElement) {
@@ -65,7 +68,6 @@ export default function AdminCourtSelector() {
       }
 
       toast.success("✅ Court added successfully");
-      await fetchCourts();
     } catch (err) {
       console.error("Add court error:", err);
       toast.error(err.response?.data?.error || "❌ Failed to add court");

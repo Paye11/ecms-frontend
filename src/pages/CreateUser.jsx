@@ -69,7 +69,6 @@ function CreateUser() {
 
   return (
     <div className="container mt-5">
-      <ToastContainer position="top-center" autoClose={3000} />
       <h2 className="mb-4 text-primary">Create New User</h2>
 
       <form onSubmit={handleSubmit} className="p-4 border rounded shadow bg-white" style={{ maxWidth: "500px" }}>

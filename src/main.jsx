@@ -5,6 +5,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PDFViewer from './components/PDFViewer';
 
 
@@ -101,6 +103,7 @@ function NavigationControls() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
+    <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
     <NavigationControls />
     <Routes>
       <Route path="/" element={<Login />} />

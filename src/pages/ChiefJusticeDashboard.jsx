@@ -29,7 +29,6 @@ function ChiefJusticeDashboard() {
 
   return (
     <div className="admin-dashboard-wrapper">
-      <ToastContainer />
       <div className="admin-box">
         <div className="logout-container d-flex justify-content-between">
           <button 

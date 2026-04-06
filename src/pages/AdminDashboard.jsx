@@ -114,7 +114,6 @@ function AdminDashboard() {
 
   return (
     <>
-      <ToastContainer />
       {page === "home" && (
         <div className="admin-dashboard-wrapper">
           <div className="admin-box">

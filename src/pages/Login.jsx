@@ -53,17 +53,6 @@ function Login() {
 
   return (
     <div className="login-container">
-      <ToastContainer 
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
       <div className="login-box">
         {/* Watermark covering entire form */}
         <div className="form-watermark">
