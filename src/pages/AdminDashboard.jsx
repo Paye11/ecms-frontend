@@ -46,12 +46,13 @@ function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/users', {
+      const res = await axios.get('/api/auth/users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(res.data);
     } catch (err) {
       console.error("Error fetching users:", err);
+      toast.error("Failed to fetch users");
     }
   };
 
@@ -62,12 +63,13 @@ function AdminDashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/user/${id}`, {
+      await axios.delete(`/api/auth/user/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();
+      toast.success("User deleted");
     } catch (err) {
-      alert("Failed to delete user.");
+      toast.error("Failed to delete user");
     }
   };
 
@@ -76,8 +78,11 @@ function AdminDashboard() {
     setEditUsername(user.username);
     setEditPassword('');
     const modalElement = document.getElementById('editUserModal');
-    const modal = new Modal(modalElement);
-    modal.show();
+    if (modalElement) {
+      const bootstrapModal = window.bootstrap?.Modal?.getInstance(modalElement) 
+        || new window.bootstrap.Modal(modalElement);
+      bootstrapModal?.show();
+    }
   };
 
   const handleUpdate = async () => {
@@ -85,15 +90,21 @@ function AdminDashboard() {
       const payload = { username: editUsername };
       if (editPassword.trim()) payload.password = editPassword;
 
-      await axios.put(`http://localhost:5000/api/auth/user/${editUser._id}`, {
+      await axios.put(`/api/auth/user/${editUser._id}`, {
         ...payload
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();
-      document.getElementById('closeEditModal').click();
+      
+      const modalElement = document.getElementById('editUserModal');
+      if (modalElement) {
+        const bootstrapModal = window.bootstrap?.Modal?.getInstance(modalElement);
+        bootstrapModal?.hide();
+      }
+      toast.success("User updated");
     } catch (err) {
-      alert("Update failed.");
+      toast.error("Update failed");
     }
   };
 

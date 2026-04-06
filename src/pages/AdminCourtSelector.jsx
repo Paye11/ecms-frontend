@@ -18,11 +18,12 @@ export default function AdminCourtSelector() {
   const fetchCourts = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/courts", {
+      const res = await axios.get("/api/courts", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCourts(res.data);
     } catch (err) {
+      console.error("Failed to load courts:", err);
       toast.error("❌ Failed to load courts");
     }
   };
@@ -36,28 +37,38 @@ export default function AdminCourtSelector() {
     const name = newCourtName.trim();
     const location = newCourtLocation.trim();
     const password = newCourtPassword;
-    if (!name || !location || !password) return;
+    if (!name || !location || !password) {
+      toast.warn("Please fill all fields");
+      return;
+    }
 
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/courts",
+        "/api/courts",
         { name, location, password },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      
       setNewCourtName("");
       setNewCourtLocation("");
       setNewCourtPassword("");
-      fetchCourts();
+      
+      // Close modal safely
+      const modalElement = document.getElementById("addCourtModal");
+      if (modalElement) {
+        const bootstrapModal = window.bootstrap?.Modal?.getInstance(modalElement) 
+          || new window.bootstrap.Modal(modalElement);
+        bootstrapModal?.hide();
+      }
 
-      const modal = window.bootstrap?.Modal.getInstance(
-        document.getElementById("addCourtModal")
-      );
-      modal.hide();
+      toast.success("✅ Court added successfully");
+      await fetchCourts();
     } catch (err) {
-      toast.error("❌ Failed to add court");
+      console.error("Add court error:", err);
+      toast.error(err.response?.data?.error || "❌ Failed to add court");
     }
   };
 
@@ -66,11 +77,12 @@ export default function AdminCourtSelector() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/courts/${courtId}`, {
+      await axios.delete(`/api/courts/${courtId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      fetchCourts();
+      await fetchCourts();
+      toast.success("Court deleted");
     } catch (err) {
       toast.error("❌ Failed to delete court");
     }
