@@ -19,7 +19,7 @@ function CreateUser() {
   useEffect(() => {
     const fetchCourts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/courts", {
+        const res = await axios.get("/api/courts", {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -38,13 +38,19 @@ function CreateUser() {
     setIsCreating(true);
 
     try {
+      const trimmedUsername = username.trim();
+      if (!trimmedUsername) {
+        toast.error("❌ Username is required");
+        return;
+      }
+
       if (password !== confirmPassword) {
         toast.error("❌ Passwords do not match");
         return;
       }
 
-      const res = await axios.post('http://localhost:5000/api/auth/create', {
-        username,
+      const res = await axios.post('/api/auth/create', {
+        username: trimmedUsername,
         role,
         password,
         circuitCourt: role === 'Circuit Clerk' ? court : null
@@ -61,7 +67,15 @@ function CreateUser() {
       }, 2000);
 
     } catch (err) {
-      toast.error(err.response?.data?.msg || "❌ Error creating user");
+      const msg = err.response?.data?.msg;
+      if (typeof msg === "string" && msg.toLowerCase().includes("already exists")) {
+        localStorage.setItem("adminOpenViewUsers", "1");
+        localStorage.setItem("adminUserSearch", username.trim());
+        toast.error(msg);
+        setTimeout(() => navigate("/admin"), 800);
+      } else {
+        toast.error(msg || "❌ Error creating user");
+      }
     } finally {
       setIsCreating(false);
     }

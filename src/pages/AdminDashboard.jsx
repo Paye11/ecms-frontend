@@ -28,6 +28,17 @@ function AdminDashboard() {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    const shouldOpenView = localStorage.getItem("adminOpenViewUsers") === "1";
+    const search = localStorage.getItem("adminUserSearch") || "";
+    if (shouldOpenView) {
+      setPage("view");
+      setSearchTerm(search);
+      localStorage.removeItem("adminOpenViewUsers");
+      localStorage.removeItem("adminUserSearch");
+    }
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
